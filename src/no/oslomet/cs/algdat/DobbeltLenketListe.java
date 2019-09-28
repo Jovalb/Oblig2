@@ -3,6 +3,8 @@ package no.oslomet.cs.algdat;
 
 ////////////////// class DobbeltLenketListe //////////////////////////////
 
+// Elever på gruppe: Jo Vetle s329329
+
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
