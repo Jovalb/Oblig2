@@ -50,7 +50,38 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public DobbeltLenketListe(T[] a) {
-        throw new NotImplementedException();
+        if (a.length < 0) { // tester om a er null
+            throw new NullPointerException("Tabellen du har oppgitt er tom!");
+        } else if(a.length == 0){
+            return;
+        }
+        Node front = new Node<>(hode);  // initialiserer hode og hale
+        Node back = front;
+
+        Node p = front; // Lager ny node som blir satt til første verdi i listen
+
+        p.verdi = a[0];
+        if (p.verdi != null){
+            antall++;
+        }
+
+        for (int i = 1; i < a.length; i++) {
+            Node q = new Node<>(a[i]);    // Skaper ny node
+
+            p.neste = q;    // oppdaterer forrige node sin nesteverdi
+            q.forrige = p;  // oppdaterer gjeldende node sin forrigeverdi
+
+            p = q;  // oppdaterer forrige node til gjeldende
+
+            q = back;   // oppdaterer hale
+
+            if (p.verdi != null) {
+                antall++;
+            }
+
+        }
+
+
     }
 
     public Liste<T> subliste(int fra, int til) {
@@ -59,14 +90,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public int antall() {
-        antall = 0; // initialiserer antallet på 0
-        Node current = hode; // initialiserer en current variabel på hodet til listen
-
-        while (current != null) {    // Sjekker om current eksisterer
-            antall++;   // teller opp antallet hvis current eksisterer og går til neste verdi lenket til current
-            current = current.neste;
-        }
-        return antall; // returnerer antallet
+        return antall;
     }
 
     @Override
