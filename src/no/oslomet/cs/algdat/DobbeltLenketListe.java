@@ -18,11 +18,11 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 
-
 public class DobbeltLenketListe<T> implements Liste<T> {
 
     /**
      * Node class
+     *
      * @param <T>
      */
     private static final class Node<T> {
@@ -53,21 +53,29 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         throw new NotImplementedException();
     }
 
-    public Liste<T> subliste(int fra, int til){
+    public Liste<T> subliste(int fra, int til) {
         throw new NotImplementedException();
     }
 
     @Override
     public int antall() {
         antall = 0; // initialiserer antallet på 0
+        Node current = hode; // initialiserer en current variabel på hodet til listen
 
-
+        while (current != null) {    // Sjekker om current eksisterer
+            antall++;   // teller opp antallet hvis current eksisterer og går til neste verdi lenket til current
+            current = current.neste;
+        }
         return antall; // returnerer antallet
     }
 
     @Override
     public boolean tom() {
-        throw new NotImplementedException();
+        if (antall() == 0) {
+            return true;    // Hvis antallet er lik 0 vil det tilsvare at listen er tom
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -133,32 +141,31 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         throw new NotImplementedException();
     }
 
-    private class DobbeltLenketListeIterator implements Iterator<T>
-    {
+    private class DobbeltLenketListeIterator implements Iterator<T> {
         private Node<T> denne;
         private boolean fjernOK;
         private int iteratorendringer;
 
-        private DobbeltLenketListeIterator(){
+        private DobbeltLenketListeIterator() {
             throw new NotImplementedException();
         }
 
-        private DobbeltLenketListeIterator(int indeks){
-            throw new NotImplementedException();
-        }
-
-        @Override
-        public boolean hasNext(){
+        private DobbeltLenketListeIterator(int indeks) {
             throw new NotImplementedException();
         }
 
         @Override
-        public T next(){
+        public boolean hasNext() {
             throw new NotImplementedException();
         }
 
         @Override
-        public void remove(){
+        public T next() {
+            throw new NotImplementedException();
+        }
+
+        @Override
+        public void remove() {
             throw new NotImplementedException();
         }
 
