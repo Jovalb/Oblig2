@@ -47,7 +47,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private int endringer;         // antall endringer i listen
 
     public DobbeltLenketListe() {
-        throw new NotImplementedException();
     }
 
     public DobbeltLenketListe(T[] a) {
@@ -60,7 +59,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public int antall() {
-        throw new NotImplementedException();
+        antall = 0; // initialiserer antallet på 0
+
+
+        return antall; // returnerer antallet
     }
 
     @Override
