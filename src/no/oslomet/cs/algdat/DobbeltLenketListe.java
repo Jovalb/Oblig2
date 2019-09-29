@@ -55,10 +55,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         } else if(a.length == 0){
             return;
         }
-        Node front = new Node<>(hode);  // initialiserer hode og hale
-        Node back = front;
+        // Node front = new Node<>(hode);
+        hode = new Node<>(a[0]);  // initialiserer hode og hale
+        hale = hode;
 
-        Node p = front; // Lager ny node som blir satt til første verdi i listen
+        Node p = hode; // Lager ny node som blir satt til første verdi i listen
 
         p.verdi = a[0];
         if (p.verdi != null){
@@ -73,7 +74,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
             p = q;  // oppdaterer forrige node til gjeldende
 
-            q = back;   // oppdaterer hale
+            q = hale;   // oppdaterer hale
 
             if (p.verdi != null) {
                 antall++;
@@ -149,7 +150,21 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public String toString() {
-        throw new NotImplementedException();
+        if (antall == 0){
+            return "[]";
+        }
+        Node n = hode;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append('[');
+
+        while (n != null){
+            stringBuilder.append(n.verdi);
+            n = n.neste;
+        }
+
+        stringBuilder.append(']');
+
+        return stringBuilder.toString();
     }
 
     public String omvendtString() {
