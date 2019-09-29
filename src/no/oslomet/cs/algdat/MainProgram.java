@@ -11,6 +11,14 @@ public class MainProgram {
         System.out.println(l1.toString() + " " + l2.toString()
                 + " " + l3.toString() + " " + l1.omvendtString() + " "
                 + l2.omvendtString() + " " + l3.omvendtString());
+
+        DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>();
+
+        for (int i = 1; i <= 3; i++) {
+            liste.leggInn(i);
+            System.out.println(liste.toString() + " " + liste.omvendtString());
+
+        }
     }
 
 }

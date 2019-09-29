@@ -50,19 +50,18 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public DobbeltLenketListe(T[] a) {
-        if (a.length < 0) { // tester om a er null
-            throw new NullPointerException("Tabellen du har oppgitt er tom!");
-        } else if(a.length == 0){
+        a = Objects.requireNonNull(a, "Tabellen a er null!");
+        if (a.length == 0) {
             return;
         }
         // Node front = new Node<>(hode);
         hode = new Node<>(a[0]);  // initialiserer hode og hale
-        hale = new Node<>(a[a.length-1]);
+        hale = new Node<>(a[a.length - 1]);
 
         Node p = hode; // Lager ny node som blir satt til første verdi i listen
 
         p.verdi = a[0];
-        if (p.verdi != null){
+        if (p.verdi != null) {
             antall++;
         }
 
@@ -105,7 +104,35 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean leggInn(T verdi) {
-        throw new NotImplementedException();
+        verdi = Objects.requireNonNull(verdi, "verdi kan ikke være null!");
+
+        if (tom()) { // tilfelle 1 at listen er på forhånd tom
+            hode = null;
+            hale = null;
+            antall = 0;
+
+            Node p = new Node<>(verdi);
+            p.neste = null;
+            p.forrige = null;
+
+            hode = p;
+            hale = p;
+            antall++;
+            endringer++;
+            return true;
+
+        } else {        // tilfelle 2 at listen eksisterer og ikke er tom
+            Node p = new Node<>(verdi);
+
+            p.forrige = hale;   // setter forrige verdi til å være halen
+            p.neste = null;     // setter neste til null
+            hale.neste = p;     // setter forrige hale sin neste verdi til p
+
+            hale = p;           // oppdaterer hale til nåværende node
+            antall++;
+            endringer++;
+            return true;
+        }
     }
 
     @Override
@@ -150,26 +177,24 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public String toString() {
-        if (antall == 0){
+        if (antall == 0) {
             return "[]";
         }
         Node n = hode;
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('[');
 
-        for (int i = 0; i < antall;) {
-            if (n.verdi == null){
+        for (int i = 0; i < antall; ) {
+            if (n.verdi == null) {
                 n = n.neste;
             } else {
-                stringBuilder.append(n.verdi).append(',');
+                stringBuilder.append(n.verdi).append(", ");
                 n = n.neste;
                 i++;
             }
         }
 
-        if (hale.verdi == null || hode.verdi == hale.verdi){ // hvis siste verdi i listen er null så fjerner vi siste kommategnet
-            stringBuilder.setLength(stringBuilder.length() -1 );
-        }
+        stringBuilder.setLength(stringBuilder.length() - 2);    //Fjerner siste kommaet
 
         stringBuilder.append(']');
 
@@ -177,26 +202,23 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public String omvendtString() {
-        if (antall == 0){
+        if (antall == 0) {
             return "[]";
         }
         Node n = hale;
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('[');
 
-        for (int i = 0; i < antall;) {
-            if (n.verdi == null){
+        for (int i = 0; i < antall; ) {
+            if (n.verdi == null) {
                 n = n.forrige;
             } else {
-                stringBuilder.append(n.verdi).append(',');
+                stringBuilder.append(n.verdi).append(", ");
                 n = n.forrige;
                 i++;
             }
         }
-
-        if (hale.verdi == null || hode.verdi == hale.verdi){ // hvis siste verdi i listen er null så fjerner vi siste kommategnet
-            stringBuilder.setLength(stringBuilder.length() -1 );
-        }
+        stringBuilder.setLength(stringBuilder.length() - 2);    //Fjerner siste kommaet
 
         stringBuilder.append(']');
 
