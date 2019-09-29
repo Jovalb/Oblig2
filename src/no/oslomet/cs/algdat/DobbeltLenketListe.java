@@ -157,9 +157,14 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('[');
 
-        while (n != null){
-            stringBuilder.append(n.verdi);
-            n = n.neste;
+        for (int i = 0; i < antall;) {
+            if (n.verdi == null){
+                n = n.neste;
+            } else {
+                stringBuilder.append(n.verdi).append(',');
+                n = n.neste;
+                i++;
+            }
         }
 
         stringBuilder.append(']');
