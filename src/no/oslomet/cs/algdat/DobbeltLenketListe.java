@@ -57,7 +57,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
         // Node front = new Node<>(hode);
         hode = new Node<>(a[0]);  // initialiserer hode og hale
-        hale = hode;
+        hale = new Node<>(a[a.length-1]);
 
         Node p = hode; // Lager ny node som blir satt til første verdi i listen
 
@@ -74,7 +74,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
             p = q;  // oppdaterer forrige node til gjeldende
 
-            q = hale;   // oppdaterer hale
+            hale = q; // oppdaterer hale
 
             if (p.verdi != null) {
                 antall++;
@@ -167,13 +167,40 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             }
         }
 
+        if (hale.verdi == null || hode.verdi == hale.verdi){ // hvis siste verdi i listen er null så fjerner vi siste kommategnet
+            stringBuilder.setLength(stringBuilder.length() -1 );
+        }
+
         stringBuilder.append(']');
 
         return stringBuilder.toString();
     }
 
     public String omvendtString() {
-        throw new NotImplementedException();
+        if (antall == 0){
+            return "[]";
+        }
+        Node n = hale;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append('[');
+
+        for (int i = 0; i < antall;) {
+            if (n.verdi == null){
+                n = n.forrige;
+            } else {
+                stringBuilder.append(n.verdi).append(',');
+                n = n.forrige;
+                i++;
+            }
+        }
+
+        if (hale.verdi == null || hode.verdi == hale.verdi){ // hvis siste verdi i listen er null så fjerner vi siste kommategnet
+            stringBuilder.setLength(stringBuilder.length() -1 );
+        }
+
+        stringBuilder.append(']');
+
+        return stringBuilder.toString();
     }
 
     @Override
