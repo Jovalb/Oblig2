@@ -85,7 +85,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public Liste<T> subliste(int fra, int til) {
-        fratilKontroll(antall,fra,til);
+        fratilKontroll(antall, fra, til);
 
         DobbeltLenketListe subliste = new DobbeltLenketListe();
 
@@ -97,7 +97,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     // fra-til-kontroll hentet fra kompendium
-    private static void fratilKontroll (int antall, int fra, int til){
+    private static void fratilKontroll(int antall, int fra, int til) {
         if (fra < 0)                                  // fra er negativ
             throw new IndexOutOfBoundsException
                     ("fra(" + fra + ") er negativ!");
@@ -160,7 +160,35 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public void leggInn(int indeks, T verdi) {
-        throw new NotImplementedException();
+        indeksKontroll(indeks, true);
+        Node nyNode = new Node<>(verdi);
+
+        if (indeks == antall) {
+            leggInn(verdi);
+        } else if (indeks == 0) {
+
+            nyNode.forrige = null;   // setter forrige verdi til å være halen
+            nyNode.neste = hode;     // setter neste til null
+            hode.forrige = nyNode;     // setter forrige hale sin neste verdi til nyNode
+
+            hode = nyNode;           // oppdaterer hale til nåværende node
+            antall++;
+            endringer++;
+        } else {
+            Node forrigeNode = hode;
+            int teller = 0;
+            while (teller < indeks-1){
+                forrigeNode = forrigeNode.neste;
+                teller++;
+            }
+            Node current = forrigeNode.neste;
+            nyNode.neste = current;
+            forrigeNode.neste = nyNode;
+
+            antall++;
+            endringer++;
+
+        }
     }
 
     private Node finnNode(int indeks) {
@@ -176,7 +204,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         } else if (indeks > antall / 2) {
             Node startNode = hale;      // lager hjelpenode som starter på hale
             Node funnetNode = startNode;        // lager noden vi skal returnere
-            for (int i = antall-1; i > indeks; i--) {
+            for (int i = antall - 1; i > indeks; i--) {
                 funnetNode = startNode.forrige; // Oppdater noden vi skal returnere
                 startNode = funnetNode;     // Oppdaterer hjelpenoden
             }
@@ -198,7 +226,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public boolean inneholder(T verdi) {
 
-        if (indeksTil(verdi) != -1){
+        if (indeksTil(verdi) != -1) {
             return true;
         }
         return false;
@@ -206,7 +234,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public int indeksTil(T verdi) {
-        if (verdi == null){ // sjekker om verdi er null
+        if (verdi == null) { // sjekker om verdi er null
             return -1;
         }
         int funnetIndex = 0;    // initialiserer funnnet index
@@ -214,7 +242,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         for (int i = 0; i < antall; i++) {      //for loop som går gjennom listen og sammenligner
             Node current = finnNode(i);
-            if (current.verdi.equals(sammenLigning.verdi)){
+            if (current.verdi.equals(sammenLigning.verdi)) {
                 funnetIndex = i;
                 return funnetIndex;
             }
@@ -226,7 +254,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public T oppdater(int indeks, T nyverdi) {
         nyverdi = Objects.requireNonNull(nyverdi, "verdi kan ikke være null!");  // sjekker for null
-        indeksKontroll(indeks,false);   // glemte å legge inn indekskontroll
+        indeksKontroll(indeks, false);   // glemte å legge inn indekskontroll
         Node eksisterendeNode = finnNode(indeks);    // lager ny node for eksisterende node
         T gammelVerdi = (T) eksisterendeNode.verdi; // her beholder vi den gamle verdien til noden
         eksisterendeNode.verdi = nyverdi;   // her bytter vi verdien til den eksisterende noden
