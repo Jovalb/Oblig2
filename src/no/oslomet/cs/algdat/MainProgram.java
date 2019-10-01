@@ -20,7 +20,7 @@ public class MainProgram {
             System.out.println(liste.toString() + " " + liste.omvendtString());
 
         }
-        liste.oppdater(1,null);
+        liste.oppdater(0,3);
 
         System.out.println(liste.toString() + " " + liste.omvendtString());
     }

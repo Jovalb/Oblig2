@@ -184,12 +184,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T oppdater(int indeks, T nyverdi) {
-        nyverdi = Objects.requireNonNull(nyverdi,"verdi kan ikke være null!");
-        Node eksisterendeNode = (Node) hent(indeks);
-        finnNode(indeks).verdi = nyverdi;
-        endringer++;
+        nyverdi = Objects.requireNonNull(nyverdi,"verdi kan ikke være null!");  // sjekker for null
+        Node eksisterendeNode = finnNode(indeks);    // lager ny node for eksisterende node
+        eksisterendeNode.verdi = nyverdi;   // her bytter vi verdien til den eksisterende noden
+        endringer++;    // oppdaterer endringer
 
-        return (T) eksisterendeNode;
+        return (T) eksisterendeNode;    // returnerer eksisterende node
     }
 
     @Override
