@@ -85,7 +85,30 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public Liste<T> subliste(int fra, int til) {
-        throw new NotImplementedException();
+        fratilKontroll(antall,fra,til);
+
+        DobbeltLenketListe subliste1 = new DobbeltLenketListe();
+
+        for (int i = fra; i < til; i++) {
+            subliste1.leggInn(hent(i));
+        }
+        subliste1.endringer = 0;
+        return subliste1;
+    }
+
+    // fra-til-kontroll hentet fra kompendium
+    private static void fratilKontroll (int antall, int fra, int til){
+        if (fra < 0)                                  // fra er negativ
+            throw new IndexOutOfBoundsException
+                    ("fra(" + fra + ") er negativ!");
+
+        if (til > antall)                          // til er utenfor tabellen
+            throw new IndexOutOfBoundsException
+                    ("til(" + til + ") > antall(" + antall + ")");
+
+        if (fra > til)                                // fra er større enn til
+            throw new IllegalArgumentException
+                    ("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
     }
 
     @Override
@@ -145,20 +168,20 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         throw new NotImplementedException();
     }
 
-    private Node finnNode(int indeks){
-        indeks = Objects.requireNonNull(indeks,"Indeks du har oppgitt er ugyldig!");
-        if (indeks <= antall/2){
+    private Node finnNode(int indeks) {
+        indeks = Objects.requireNonNull(indeks, "Indeks du har oppgitt er ugyldig!");
+        if (indeks <= antall / 2) {
             Node startNode = hode;      // lager hjelpenode som starter på hode
             Node funnetNode = startNode;        // lager noden vi skal retunere
-            for (int i = 0; i < indeks ; i++) {
+            for (int i = 0; i < indeks; i++) {
                 funnetNode = startNode.neste; // Oppdater noden vi skal returnere
                 startNode = funnetNode;     // Oppdaterer hjelpenoden
             }
             return funnetNode;
-        } else if( indeks > antall/2){
+        } else if (indeks > antall / 2) {
             Node startNode = hale;      // lager hjelpenode som starter på hale
             Node funnetNode = startNode;        // lager noden vi skal returnere
-            for (int i = antall; i > indeks ; i--) {
+            for (int i = antall-1; i > indeks; i--) {
                 funnetNode = startNode.forrige; // Oppdater noden vi skal returnere
                 startNode = funnetNode;     // Oppdaterer hjelpenoden
             }
@@ -171,10 +194,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T hent(int indeks) {
-        indeksKontroll(indeks,false);
+        indeksKontroll(indeks, false);
 
-        Node hentetNode = new Node<>(finnNode(indeks));
-        return (T) hentetNode;  // her bruker vi finnNode metoden og returnerer en node lik den på indeks
+        Node hentetNode = finnNode(indeks);
+        return (T) hentetNode.verdi;  // her bruker vi finnNode metoden og returnerer en node lik den på indeks
     }
 
     @Override
@@ -184,7 +207,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T oppdater(int indeks, T nyverdi) {
-        nyverdi = Objects.requireNonNull(nyverdi,"verdi kan ikke være null!");  // sjekker for null
+        nyverdi = Objects.requireNonNull(nyverdi, "verdi kan ikke være null!");  // sjekker for null
         Node eksisterendeNode = finnNode(indeks);    // lager ny node for eksisterende node
         eksisterendeNode.verdi = nyverdi;   // her bytter vi verdien til den eksisterende noden
         endringer++;    // oppdaterer endringer

@@ -15,14 +15,36 @@ public class MainProgram {
         DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>();
         System.out.println(liste.toString() + " " + liste.omvendtString());
 
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 4; i++) {
             liste.leggInn(i);
             System.out.println(liste.toString() + " " + liste.omvendtString());
 
         }
-        liste.oppdater(0,3);
 
-        System.out.println(liste.toString() + " " + liste.omvendtString());
+        System.out.println(liste.hent(3));
+        System.out.println(liste.antall());
+
+
+
+
+        System.out.println(liste.subliste(0,4));
+
+
+
+        Character[] c = {'A','B','C','D','E','F','G','H','I','J',};
+
+        DobbeltLenketListe<Character> liste1 = new DobbeltLenketListe<>(c);
+
+        System.out.println(liste1 + " " + liste1.omvendtString());
+
+        System.out.println(liste1.subliste(3,8));
+        System.out.println(liste1.subliste(5,5));
+        System.out.println(liste1.subliste(8,liste1.antall()));
+
+
+
+
+
     }
 
 }
