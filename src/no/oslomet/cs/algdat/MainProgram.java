@@ -37,6 +37,11 @@ public class MainProgram {
         System.out.println(liste);
         System.out.println(liste.subliste(0,4));
 
+        System.out.println(liste.indeksTil(5));
+
+        System.out.println(liste.inneholder(3));
+
+
 
 
         /*Character[] c = {'A','B','C','D','E','F','G','H','I','J',};

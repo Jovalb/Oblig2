@@ -163,11 +163,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         throw new NotImplementedException();
     }
 
-    @Override
-    public boolean inneholder(T verdi) {
-        throw new NotImplementedException();
-    }
-
     private Node finnNode(int indeks) {
         indeks = Objects.requireNonNull(indeks, "Indeks du har oppgitt er ugyldig!");
         if (indeks <= antall / 2) {
@@ -201,8 +196,31 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     @Override
+    public boolean inneholder(T verdi) {
+
+        if (indeksTil(verdi) != -1){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public int indeksTil(T verdi) {
-        throw new NotImplementedException();
+        if (verdi == null){ // sjekker om verdi er null
+            return -1;
+        }
+        int funnetIndex = 0;    // initialiserer funnnet index
+        Node sammenLigning = new Node<>(verdi); // setter opp node til verdi for sammenligning
+
+        for (int i = 0; i < antall; i++) {      //for loop som går gjennom listen og sammenligner
+            Node current = finnNode(i);
+            if (current.verdi.equals(sammenLigning.verdi)){
+                funnetIndex = i;
+                return funnetIndex;
+            }
+
+        }
+        return -1;
     }
 
     @Override
