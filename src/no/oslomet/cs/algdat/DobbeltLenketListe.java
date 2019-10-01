@@ -87,13 +87,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public Liste<T> subliste(int fra, int til) {
         fratilKontroll(antall,fra,til);
 
-        DobbeltLenketListe subliste1 = new DobbeltLenketListe();
+        DobbeltLenketListe subliste = new DobbeltLenketListe();
 
         for (int i = fra; i < til; i++) {
-            subliste1.leggInn(hent(i));
+            subliste.leggInn(hent(i));
         }
-        subliste1.endringer = 0;
-        return subliste1;
+        subliste.endringer = 0;
+        return subliste;
     }
 
     // fra-til-kontroll hentet fra kompendium
@@ -208,11 +208,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public T oppdater(int indeks, T nyverdi) {
         nyverdi = Objects.requireNonNull(nyverdi, "verdi kan ikke være null!");  // sjekker for null
+        indeksKontroll(indeks,false);   // glemte å legge inn indekskontroll
         Node eksisterendeNode = finnNode(indeks);    // lager ny node for eksisterende node
+        T gammelVerdi = (T) eksisterendeNode.verdi; // her beholder vi den gamle verdien til noden
         eksisterendeNode.verdi = nyverdi;   // her bytter vi verdien til den eksisterende noden
         endringer++;    // oppdaterer endringer
 
-        return (T) eksisterendeNode;    // returnerer eksisterende node
+        return gammelVerdi;    // returnerer eksisterende node sin forrige verdi
     }
 
     @Override

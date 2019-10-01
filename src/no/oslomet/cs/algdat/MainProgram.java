@@ -29,9 +29,17 @@ public class MainProgram {
 
         System.out.println(liste.subliste(0,4));
 
+        //System.out.println(liste.oppdater(4,5));
+        if (liste.oppdater(3,5) != 4){
+            System.out.println("hei");
+        }
+
+        System.out.println(liste);
+        System.out.println(liste.subliste(0,4));
 
 
-        Character[] c = {'A','B','C','D','E','F','G','H','I','J',};
+
+        /*Character[] c = {'A','B','C','D','E','F','G','H','I','J',};
 
         DobbeltLenketListe<Character> liste1 = new DobbeltLenketListe<>(c);
 
@@ -39,7 +47,7 @@ public class MainProgram {
 
         System.out.println(liste1.subliste(3,8));
         System.out.println(liste1.subliste(5,5));
-        System.out.println(liste1.subliste(8,liste1.antall()));
+        System.out.println(liste1.subliste(8,liste1.antall()));*/
 
 
 
