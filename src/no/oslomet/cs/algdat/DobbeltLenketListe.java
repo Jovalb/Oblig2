@@ -145,9 +145,33 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         throw new NotImplementedException();
     }
 
+    private Node finnNode(int indeks){
+        indeks = Objects.requireNonNull(indeks,"Indeks du har oppgitt er ugyldig!");
+        if (indeks <= antall/2){
+            Node startNode = hode;      // lager hjelpenode som starter på hode
+            Node funnetNode = startNode;        // lager noden vi skal retunere
+            for (int i = 0; i < indeks ; i++) {
+                funnetNode = startNode.neste; // Oppdater noden vi skal returnere
+                startNode = funnetNode;     // Oppdaterer hjelpenoden
+            }
+            return funnetNode;
+        } else if( indeks > antall/2){
+            Node startNode = hale;      // lager hjelpenode som starter på hale
+            Node funnetNode = startNode;        // lager noden vi skal returnere
+            for (int i = antall; i > indeks ; i--) {
+                funnetNode = startNode.forrige; // Oppdater noden vi skal returnere
+                startNode = funnetNode;     // Oppdaterer hjelpenoden
+            }
+            return funnetNode;
+        }
+
+
+        return null;    // hvis indeksen ikke stemmer returnerer vi null
+    }
+
     @Override
     public T hent(int indeks) {
-        throw new NotImplementedException();
+        return (T) finnNode(indeks).verdi;  // her bruker vi finnNode metoden og returnerer verdien til noden
     }
 
     @Override
