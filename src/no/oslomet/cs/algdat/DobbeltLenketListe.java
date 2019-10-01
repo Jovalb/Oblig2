@@ -163,27 +163,37 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         indeksKontroll(indeks, true);
         Node nyNode = new Node<>(verdi);
 
-        if (indeks == antall) {
+        if (hode == null || indeks == antall) {     //sjekker om noden skal settes bakerst
             leggInn(verdi);
-        } else if (indeks == 0) {
+        } else if (indeks == 0) {       //sjekker om noden skal settes fremmers
 
-            nyNode.forrige = null;   // setter forrige verdi til å være halen
-            nyNode.neste = hode;     // setter neste til null
-            hode.forrige = nyNode;     // setter forrige hale sin neste verdi til nyNode
+            nyNode.forrige = null;
+            nyNode.neste = hode;     // setter neste til forrige hodet
+            hode.forrige = nyNode;     // oppdaterer hodet sin forrige verdi til nynode
 
-            hode = nyNode;           // oppdaterer hale til nåværende node
+            hode = nyNode;           // oppdaterer hodet til nåværende node
             antall++;
             endringer++;
         } else {
             Node forrigeNode = hode;
             int teller = 0;
-            while (teller < indeks-1){
+            while (teller < antall){
+                if (teller == indeks-1){
+                    Node current = forrigeNode.neste;
+                    nyNode.neste = current;
+                    forrigeNode.neste = nyNode;
+                    nyNode.forrige = forrigeNode;
+                    current.forrige = nyNode;
+                }
                 forrigeNode = forrigeNode.neste;
+
                 teller++;
             }
+            /*
             Node current = forrigeNode.neste;
             nyNode.neste = current;
             forrigeNode.neste = nyNode;
+            nyNode.forrige = forrigeNode;*/
 
             antall++;
             endringer++;

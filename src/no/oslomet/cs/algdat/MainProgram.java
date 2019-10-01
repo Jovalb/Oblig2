@@ -12,14 +12,14 @@ public class MainProgram {
                 + " " + l3.toString() + " " + l1.omvendtString() + " "
                 + l2.omvendtString() + " " + l3.omvendtString());*/
 
-        DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>();
+        //DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>();
        // System.out.println(liste.toString() + " " + liste.omvendtString());
 
-        for (int i = 1; i <= 4; i++) {
+       /* for (int i = 1; i <= 4; i++) {
             liste.leggInn(i);
             //System.out.println(liste.toString() + " " + liste.omvendtString());
 
-        }
+        }*/
 
         //System.out.println(liste.hent(3));
        // System.out.println(liste.antall());
@@ -30,9 +30,9 @@ public class MainProgram {
        // System.out.println(liste.subliste(0,4));
 
         //System.out.println(liste.oppdater(4,5));
-        if (liste.oppdater(3,5) != 4){
+        /*if (liste.oppdater(3,5) != 4){
             System.out.println("hei");
-        }
+        }*/
 
         //System.out.println(liste);
         //System.out.println(liste.subliste(0,4));
@@ -43,9 +43,26 @@ public class MainProgram {
 
         //System.out.println(liste.antall());
 
-        liste.leggInn(0,7);
+
+        /*liste.leggInn(0,7);
         System.out.println(liste);
         System.out.println(liste.antall());
+
+        System.out.println(liste.toString() + " " + liste.omvendtString());*/
+
+        DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>();
+
+        liste.leggInn(0, 4);  // ny verdi i tom liste
+        liste.leggInn(0, 2);  // ny verdi legges forrest
+        liste.leggInn(2, 6);  // ny verdi legges bakerst
+        liste.leggInn(1, 3);  // ny verdi nest forrest
+        liste.leggInn(3, 5);  // ny verdi nest bakerst
+        liste.leggInn(0, 1);  // ny verdi forrest
+        liste.leggInn(6, 7);  // ny verdi legges bakerst
+
+        System.out.println(liste.toString());
+
+        System.out.println(liste.omvendtString());
 
 
 
