@@ -20,10 +20,9 @@ public class MainProgram {
             System.out.println(liste.toString() + " " + liste.omvendtString());
 
         }
+        liste.oppdater(1,null);
 
-        liste.leggInn(liste.hent(1));
-
-        System.out.println(liste.toString());
+        System.out.println(liste.toString() + " " + liste.omvendtString());
     }
 
 }

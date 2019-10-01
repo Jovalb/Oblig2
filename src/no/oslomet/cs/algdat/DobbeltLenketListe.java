@@ -171,7 +171,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T hent(int indeks) {
-        return (T) finnNode(indeks).verdi;  // her bruker vi finnNode metoden og returnerer verdien til noden
+        indeksKontroll(indeks,false);
+
+        Node hentetNode = new Node<>(finnNode(indeks));
+        return (T) hentetNode;  // her bruker vi finnNode metoden og returnerer en node lik den på indeks
     }
 
     @Override
@@ -181,7 +184,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T oppdater(int indeks, T nyverdi) {
-        throw new NotImplementedException();
+        nyverdi = Objects.requireNonNull(nyverdi,"verdi kan ikke være null!");
+        Node eksisterendeNode = (Node) hent(indeks);
+        finnNode(indeks).verdi = nyverdi;
+        endringer++;
+
+        return (T) eksisterendeNode;
     }
 
     @Override
