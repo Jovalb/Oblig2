@@ -64,6 +64,10 @@ public class MainProgram {
 
         System.out.println(liste.omvendtString());
 
+        liste.fjern(6);
+
+        System.out.println(liste);
+
 
 
 

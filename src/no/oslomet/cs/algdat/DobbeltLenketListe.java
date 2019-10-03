@@ -175,26 +175,20 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             antall++;
             endringer++;
         } else {
-            Node forrigeNode = hode;
+            Node forrigeNode = hode;    // her setter vi opp noden som skal være noden før den vi setter inn
             int teller = 0;
-            while (teller < antall){
-                if (teller == indeks-1){
-                    Node current = forrigeNode.neste;
-                    nyNode.neste = current;
-                    forrigeNode.neste = nyNode;
-                    nyNode.forrige = forrigeNode;
-                    current.forrige = nyNode;
+            while (teller < antall){    // teller som går gjennom hele listen
+                if (teller == indeks-1){    // når vi når punktet før der vi skal plassere noden starter vi prosessen
+                    Node current = forrigeNode.neste;   // vi setter nåværende node til å være den forrige sin neste
+                    nyNode.neste = current;     // Vi setter den nye noden sin neste til å være den nåværende
+                    forrigeNode.neste = nyNode;     // vi oppdaterer den forrige noden så den peker på den nye
+                    nyNode.forrige = forrigeNode;   // oppdaterer den nye så den peker på den forrige
+                    current.forrige = nyNode;       // oppdaterer noden etter den nye så den peker på den nye
                 }
-                forrigeNode = forrigeNode.neste;
+                forrigeNode = forrigeNode.neste;        // her blar vi gjennom alle nodene
 
                 teller++;
             }
-            /*
-            Node current = forrigeNode.neste;
-            nyNode.neste = current;
-            forrigeNode.neste = nyNode;
-            nyNode.forrige = forrigeNode;*/
-
             antall++;
             endringer++;
 
@@ -230,7 +224,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         indeksKontroll(indeks, false);
 
         Node hentetNode = finnNode(indeks);
-        return (T) hentetNode.verdi;  // her bruker vi finnNode metoden og returnerer en node lik den på indeks
+        return (T) hentetNode.verdi;  // her bruker vi finnNode metoden og returnerer en node sin verdi lik den på indeks
     }
 
     @Override
@@ -280,7 +274,45 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T fjern(int indeks) {
-        throw new NotImplementedException();
+        indeksKontroll(indeks,false);
+        Node gammelNode = hode;     // starter å lete fra hodet
+
+        if (indeks == 0){
+            hode = gammelNode.neste;
+            hode.forrige = null;
+            gammelNode.neste = null;
+
+            antall--;
+            endringer++;
+
+            return hode.verdi;
+        }
+
+        for (int i = 0; i < indeks-1; i++) {
+            gammelNode = gammelNode.neste;
+        }
+
+        if(indeks == antall-1){
+            hale = gammelNode;
+            hale.neste = null;
+            gammelNode.forrige = null;
+
+            antall--;
+            endringer++;
+
+            return hale.verdi;
+        }
+
+        Node nesteNode = gammelNode.neste;
+        Node nesteNesteNode = nesteNode.neste;
+
+        gammelNode.neste = nesteNesteNode;
+        nesteNesteNode.forrige = nesteNode;
+
+        antall--;
+        endringer++;
+
+        return (T) gammelNode.verdi;
     }
 
     @Override
