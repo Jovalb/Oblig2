@@ -64,11 +64,23 @@ public class MainProgram {
 
         System.out.println(liste.omvendtString());
 
-        liste.fjern(6);
+        liste.fjern(0);
 
         System.out.println(liste);
+        System.out.println(liste.omvendtString());
 
 
+        String [] a = {"A","B","C","D","E","F"};
+
+        DobbeltLenketListe<String> liste1 = new DobbeltLenketListe<>(a);
+
+        System.out.println(liste1 + " " + liste1.omvendtString());
+
+        if (!liste1.fjern(2).equals("C")){
+            System.out.println("hei");
+        }
+
+        System.out.println(liste1 + " " + liste1.omvendtString());
 
 
         /*Character[] c = {'A','B','C','D','E','F','G','H','I','J',};

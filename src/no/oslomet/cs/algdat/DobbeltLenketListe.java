@@ -177,8 +177,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         } else {
             Node forrigeNode = hode;    // her setter vi opp noden som skal være noden før den vi setter inn
             int teller = 0;
-            while (teller < antall){    // teller som går gjennom hele listen
-                if (teller == indeks-1){    // når vi når punktet før der vi skal plassere noden starter vi prosessen
+            while (teller < antall) {    // teller som går gjennom hele listen
+                if (teller == indeks - 1) {    // når vi når punktet før der vi skal plassere noden starter vi prosessen
                     Node current = forrigeNode.neste;   // vi setter nåværende node til å være den forrige sin neste
                     nyNode.neste = current;     // Vi setter den nye noden sin neste til å være den nåværende
                     forrigeNode.neste = nyNode;     // vi oppdaterer den forrige noden så den peker på den nye
@@ -269,50 +269,109 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean fjern(T verdi) {
-        throw new NotImplementedException();
+        verdi = Objects.requireNonNull(verdi, "verdi kan ikke være null!");
+
+        if (antall == 1 && hode.verdi == verdi) {
+            hode = null;
+            hale = null;
+            antall--;
+            endringer++;
+
+            return true;
+        }
+        Node leteNode = hode;
+
+        for (int i = 0; i < antall; i++) {
+            if (leteNode.verdi == verdi) {
+                if (i == 0) {
+                    hode = leteNode.neste;
+                    hode.forrige = null;
+                    leteNode.forrige = null;
+
+                    antall--;
+                    endringer++;
+                    return true;
+                } else if (i == antall - 1) {
+                    hale = leteNode.forrige;
+                    hale.neste = null;
+                    leteNode.neste = null;
+
+                    antall--;
+                    endringer++;
+                    return true;
+                } else {
+                    leteNode = leteNode.forrige;        // her måtte jeg gå et hakk tilbake ellers ville den slette neste node
+                    Node nesteNode = leteNode.neste;
+                    Node nesteNesteNode = nesteNode.neste;
+
+                    leteNode.neste = nesteNesteNode;
+                    nesteNesteNode.forrige = leteNode;
+
+                    antall--;
+                    endringer++;
+                    return true;
+                }
+            }
+            leteNode = leteNode.neste;
+        }
+        return false;
     }
 
     @Override
     public T fjern(int indeks) {
-        indeksKontroll(indeks,false);
-        Node gammelNode = hode;     // starter å lete fra hodet
+        indeksKontroll(indeks, false);
+        Node currentNode = hode;     // starter å lete fra hodet
+        Node tempNode = currentNode;
 
-        if (indeks == 0){
-            hode = gammelNode.neste;
+        if (antall == 1) {
+            hode = null;
+            hale = null;
+
+            antall--;
+            endringer++;
+            return (T) currentNode.verdi;
+        }
+
+        if (indeks == 0) {
+            hode = currentNode.neste;
             hode.forrige = null;
-            gammelNode.neste = null;
+            currentNode.neste = null;
 
             antall--;
             endringer++;
 
-            return hode.verdi;
+            return (T) currentNode.verdi;
         }
 
-        for (int i = 0; i < indeks-1; i++) {
-            gammelNode = gammelNode.neste;
+        for (int i = 0; i < indeks; i++) {
+            currentNode = currentNode.neste;
+            tempNode = currentNode;
         }
 
-        if(indeks == antall-1){
-            hale = gammelNode;
+        if (indeks == antall - 1) {
+            hale = currentNode.forrige;
             hale.neste = null;
-            gammelNode.forrige = null;
+            currentNode.neste = null;
 
             antall--;
             endringer++;
 
-            return hale.verdi;
+            return (T) tempNode.verdi;
         }
 
-        Node nesteNode = gammelNode.neste;
+        if (currentNode.neste.neste == null) {       // hvis vi kommer utenfor listen går vi tilbake et steg
+            currentNode = currentNode.forrige;
+        }
+        Node nesteNode = currentNode.neste;
         Node nesteNesteNode = nesteNode.neste;
 
-        gammelNode.neste = nesteNesteNode;
-        nesteNesteNode.forrige = nesteNode;
+        currentNode.neste = nesteNesteNode;
+        nesteNesteNode.forrige = currentNode;
 
         antall--;
         endringer++;
 
-        return (T) gammelNode.verdi;
+        return (T) tempNode.verdi;
     }
 
     @Override
