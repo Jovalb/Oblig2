@@ -269,9 +269,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean fjern(T verdi) {
-        verdi = Objects.requireNonNull(verdi, "verdi kan ikke være null!");
+        if (verdi == null){
+            return false;
+        }
 
-        if (antall == 1 && hode.verdi == verdi) {
+        if (antall == 1 && hode.verdi.equals(verdi)) {
             hode = null;
             hale = null;
             antall--;
@@ -282,7 +284,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         Node leteNode = hode;
 
         for (int i = 0; i < antall; i++) {
-            if (leteNode.verdi == verdi) {
+            if (leteNode.verdi.equals(verdi)) {
                 if (i == 0) {
                     hode = leteNode.neste;
                     hode.forrige = null;
@@ -359,9 +361,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             return (T) tempNode.verdi;
         }
 
-        if (currentNode.neste.neste == null) {       // hvis vi kommer utenfor listen går vi tilbake et steg
-            currentNode = currentNode.forrige;
-        }
+        currentNode = currentNode.forrige;      // går et hakk tilbake i listen
         Node nesteNode = currentNode.neste;
         Node nesteNesteNode = nesteNode.neste;
 
