@@ -450,12 +450,16 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     @Override
-    public Iterator<T> iterator() {
-        throw new NotImplementedException();
+    public Iterator<T> iterator() {     // usikker om dette var riktig
+        Iterator iterator = new DobbeltLenketListeIterator();
+
+        return iterator;
     }
 
     public Iterator<T> iterator(int indeks) {
-        throw new NotImplementedException();
+        indeksKontroll(indeks,false);
+
+        return iterator();
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T> {
@@ -464,21 +468,37 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         private int iteratorendringer;
 
         private DobbeltLenketListeIterator() {
-            throw new NotImplementedException();
+            denne = hode;     // p starter på den første i listen
+            fjernOK = false;  // blir sann når next() kalles
+            iteratorendringer = endringer;  // teller endringer
         }
 
         private DobbeltLenketListeIterator(int indeks) {
-            throw new NotImplementedException();
+            denne = hode;     // p starter på den første i listen
+            fjernOK = false;  // blir sann når next() kalles
+            iteratorendringer = endringer;  // teller endringer
+
+            Node current = finnNode(indeks);
+            denne.neste = current;
         }
 
         @Override
         public boolean hasNext() {
-            throw new NotImplementedException();
+            return denne != null;
         }
 
         @Override
         public T next() {
-            throw new NotImplementedException();
+            if (iteratorendringer != endringer){
+                throw new ConcurrentModificationException("Iteratorendringer stemmer ikke med endringer i listen!");
+            } else if (!hasNext()){
+                throw new NoSuchElementException("Listen er tom!");
+            }
+
+            fjernOK = true;
+            T tempVerdi = denne.verdi;
+            denne = denne.neste;
+            return tempVerdi;
         }
 
         @Override

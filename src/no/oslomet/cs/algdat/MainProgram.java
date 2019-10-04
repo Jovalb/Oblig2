@@ -82,6 +82,15 @@ public class MainProgram {
 
         System.out.println(liste1 + " " + liste1.omvendtString());
 
+        String[] navn = {"Lars","Anders","Bodil","Kari","Per","Berit"};
+        Liste<String> navneListe = new DobbeltLenketListe<>(navn);
+
+        navneListe.forEach(s -> System.out.print(s + " "));
+        System.out.println();
+        for (String s : navneListe){
+            System.out.print(s + " ");
+        }
+
 
         /*Character[] c = {'A','B','C','D','E','F','G','H','I','J',};
 
