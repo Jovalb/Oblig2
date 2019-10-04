@@ -76,13 +76,11 @@ public class MainProgram {
 
         System.out.println(liste1 + " " + liste1.omvendtString());
 
-        if (!liste1.fjern(3).equals("D")){
-            System.out.println("hei");
-        }
-
         System.out.println(liste1 + " " + liste1.omvendtString());
 
-        liste1.fjern(null);
+        liste1.nullstill();
+
+        System.out.println(liste1 + " " + liste1.omvendtString());
 
 
         /*Character[] c = {'A','B','C','D','E','F','G','H','I','J',};
