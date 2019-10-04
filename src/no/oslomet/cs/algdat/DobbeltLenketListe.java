@@ -376,18 +376,27 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public void nullstill() {
+       // long startTime = System.nanoTime();
+        /*
+        int antall = this.antall;
+        for (int i = 0; i < antall; i++) {
+            fjern(0);
+        }*/     // Denne teknikken var kortere og renere men brukte ca 5200 nanosekunder
+
+                // Teknikken under har mer kode men bruker ca 2200 nanosekunder
         Node current = hode;
         for (int i = 0; i < antall; i++) {
             Node nesteNode = current.neste;
             current.forrige = null;
             current.neste = null;
-            current = null;
             current = nesteNode;
             hode = current;
             endringer++;
         }
         antall = 0;
         hale = hode;
+        long endTime = System.nanoTime();
+        //System.out.println("Tid brukt: "+(endTime - startTime) + " nanosekunder");
     }
 
     @Override
