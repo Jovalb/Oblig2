@@ -458,8 +458,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     public Iterator<T> iterator(int indeks) {
         indeksKontroll(indeks,false);
-
-        return iterator();
+        Iterator iteratorIndeks = new DobbeltLenketListeIterator(indeks);
+        return iteratorIndeks;
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T> {
@@ -474,12 +474,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         private DobbeltLenketListeIterator(int indeks) {
-            denne = hode;     // p starter på den første i listen
+            denne = finnNode(indeks);     // peker denne på noden på indeksen
             fjernOK = false;  // blir sann når next() kalles
             iteratorendringer = endringer;  // teller endringer
-
-            Node current = finnNode(indeks);
-            denne.neste = current;
         }
 
         @Override
@@ -496,7 +493,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             }
 
             fjernOK = true;
-            T tempVerdi = denne.verdi;
+            T tempVerdi = denne.verdi;      // oppretter en tempverdi som holder denne sin verdi før den flyttes videre til neste node
             denne = denne.neste;
             return tempVerdi;
         }
