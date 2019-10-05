@@ -269,7 +269,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean fjern(T verdi) {
-        if (verdi == null){
+        if (verdi == null) {
             return false;
         }
 
@@ -376,14 +376,14 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public void nullstill() {
-       // long startTime = System.nanoTime();
+        // long startTime = System.nanoTime();
         /*
         int antall = this.antall;
         for (int i = 0; i < antall; i++) {
             fjern(0);
         }*/     // Denne teknikken var kortere og renere men brukte ca 5200 nanosekunder
 
-                // Teknikken under har mer kode men bruker ca 2200 nanosekunder
+        // Teknikken under har mer kode men bruker ca 2200 nanosekunder
         Node current = hode;
         for (int i = 0; i < antall; i++) {
             Node nesteNode = current.neste;
@@ -395,7 +395,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
         antall = 0;
         hale = hode;
-        long endTime = System.nanoTime();
+        // long endTime = System.nanoTime();
         //System.out.println("Tid brukt: "+(endTime - startTime) + " nanosekunder");
     }
 
@@ -457,7 +457,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public Iterator<T> iterator(int indeks) {
-        indeksKontroll(indeks,false);
+        indeksKontroll(indeks, false);
         Iterator iteratorIndeks = new DobbeltLenketListeIterator(indeks);
         return iteratorIndeks;
     }
@@ -486,9 +486,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         @Override
         public T next() {
-            if (iteratorendringer != endringer){
+            if (iteratorendringer != endringer) {
                 throw new ConcurrentModificationException("Iteratorendringer stemmer ikke med endringer i listen!");
-            } else if (!hasNext()){
+            } else if (!hasNext()) {
                 throw new NoSuchElementException("Listen er tom!");
             }
 
@@ -500,7 +500,35 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         @Override
         public void remove() {
-            throw new NotImplementedException();
+            if (!fjernOK) {
+                throw new IllegalStateException("Ikke tillatt å tilkalle metoden!");
+            } else if (iteratorendringer != endringer){
+                throw new ConcurrentModificationException("Iteratorendringer stemmer ikke med endringer i listen!");
+            } else {
+                fjernOK = false;
+            }
+
+            if (antall == 1){       // bare 1 verdi i listen
+                hode = null;
+                hale = null;
+            } else if ( denne == null ){        // hvis den siste skal fjernes
+                hale = hale.forrige;
+                hale.neste = null;
+            } else if ( denne.forrige == hode){     // hvis den første skal fjernes
+                hode = denne;
+                hode.forrige = null;
+            } else {
+                Node forrigeNode = denne.forrige;
+                Node forrigeForrigeNode = forrigeNode.forrige;
+
+                forrigeForrigeNode.neste = denne;
+                denne.forrige = forrigeForrigeNode;
+
+            }
+
+            antall--;
+            endringer++;
+            iteratorendringer++;
         }
 
     } // class DobbeltLenketListeIterator
