@@ -502,19 +502,19 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         public void remove() {
             if (!fjernOK) {
                 throw new IllegalStateException("Ikke tillatt å tilkalle metoden!");
-            } else if (iteratorendringer != endringer){
+            } else if (iteratorendringer != endringer) {
                 throw new ConcurrentModificationException("Iteratorendringer stemmer ikke med endringer i listen!");
             } else {
                 fjernOK = false;
             }
 
-            if (antall == 1){       // bare 1 verdi i listen
+            if (antall == 1) {       // bare 1 verdi i listen
                 hode = null;
                 hale = null;
-            } else if ( denne == null ){        // hvis den siste skal fjernes
+            } else if (denne == null) {        // hvis den siste skal fjernes
                 hale = hale.forrige;
                 hale.neste = null;
-            } else if ( denne.forrige == hode){     // hvis den første skal fjernes
+            } else if (denne.forrige == hode) {     // hvis den første skal fjernes
                 hode = denne;
                 hode.forrige = null;
             } else {                                // hvis node inne i liste skal fjernes
@@ -534,34 +534,19 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     } // class DobbeltLenketListeIterator
 
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
-        if (liste.tom()){
-            throw new NoSuchElementException("Listen er tom!");
+        if (liste.tom()) {      // får vi inn en tom liste returnerer vi
+            return;
         }
-
-
-        // hentet fra kompendium
-        Iterator<T> it = liste.iterator();
-        T maksVerdi = it.next();
-
-        for (int i = 1; i < liste.antall(); i++) {
-            for (int j = 1; j < liste.antall()-i; j++) {
-                T currentVerdi = it.next();
-                if (c.compare(currentVerdi,maksVerdi) < 0){
-                    int indeksCurrent = liste.indeksTil(currentVerdi);
-                    int indeksMaks = liste.indeksTil(maksVerdi);
-                    T tempVerdi = currentVerdi;
-                    liste.oppdater(indeksCurrent,maksVerdi);
-                    liste.oppdater(indeksMaks,tempVerdi);
+        for (int i = 0; i < liste.antall(); i++) {
+            for (int j = 0; j < liste.antall(); j++) {
+                if ((c.compare(liste.hent(i), liste.hent(j))) < 0) { // hvis første verdi er større enn andre verdi utfører vi if statementen
+                    T tempVerdi = liste.hent(i);
+                    liste.oppdater(i,liste.hent(j));
+                    liste.oppdater(j,tempVerdi);
                 }
-
             }
 
         }
-
-
-
-
-
 
 
     }
