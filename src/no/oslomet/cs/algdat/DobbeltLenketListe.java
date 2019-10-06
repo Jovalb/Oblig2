@@ -546,7 +546,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         for (int i = 1; i < liste.antall(); i++) {
             for (int j = 1; j < liste.antall()-i; j++) {
                 T currentVerdi = it.next();
-                if (c.compare(currentVerdi,maksVerdi) > 0){
+                if (c.compare(currentVerdi,maksVerdi) < 0){
                     int indeksCurrent = liste.indeksTil(currentVerdi);
                     int indeksMaks = liste.indeksTil(maksVerdi);
                     T tempVerdi = currentVerdi;
