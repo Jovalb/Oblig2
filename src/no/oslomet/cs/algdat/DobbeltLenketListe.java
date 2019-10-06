@@ -258,7 +258,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public T oppdater(int indeks, T nyverdi) {
         nyverdi = Objects.requireNonNull(nyverdi, "verdi kan ikke være null!");  // sjekker for null
-        indeksKontroll(indeks, false);   // glemte å legge inn indekskontroll
+        indeksKontroll(indeks, false);
         Node eksisterendeNode = finnNode(indeks);    // lager ny node for eksisterende node
         T gammelVerdi = (T) eksisterendeNode.verdi; // her beholder vi den gamle verdien til noden
         eksisterendeNode.verdi = nyverdi;   // her bytter vi verdien til den eksisterende noden
