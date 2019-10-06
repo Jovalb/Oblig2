@@ -517,8 +517,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             } else if ( denne.forrige == hode){     // hvis den første skal fjernes
                 hode = denne;
                 hode.forrige = null;
-            } else {
-                Node forrigeNode = denne.forrige;
+            } else {                                // hvis node inne i liste skal fjernes
+                Node forrigeNode = denne.forrige;   // bruker omvendt teknikk sett i tidligere fjern metoder
                 Node forrigeForrigeNode = forrigeNode.forrige;
 
                 forrigeForrigeNode.neste = denne;
@@ -534,7 +534,36 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     } // class DobbeltLenketListeIterator
 
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
-        throw new NotImplementedException();
+        if (liste.tom()){
+            throw new NoSuchElementException("Listen er tom!");
+        }
+
+
+        // hentet fra kompendium
+        Iterator<T> it = liste.iterator();
+        T maksVerdi = it.next();
+
+        for (int i = 1; i < liste.antall(); i++) {
+            for (int j = 1; j < liste.antall()-i; j++) {
+                T currentVerdi = it.next();
+                if (c.compare(currentVerdi,maksVerdi) > 0){
+                    int indeksCurrent = liste.indeksTil(currentVerdi);
+                    int indeksMaks = liste.indeksTil(maksVerdi);
+                    T tempVerdi = currentVerdi;
+                    liste.oppdater(indeksCurrent,maksVerdi);
+                    liste.oppdater(indeksMaks,tempVerdi);
+                }
+
+            }
+
+        }
+
+
+
+
+
+
+
     }
 
 } // class DobbeltLenketListe

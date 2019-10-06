@@ -1,5 +1,8 @@
 package no.oslomet.cs.algdat;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class MainProgram {
 
     public static void main(String[] args) {
@@ -13,7 +16,7 @@ public class MainProgram {
                 + l2.omvendtString() + " " + l3.omvendtString());*/
 
         //DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>();
-       // System.out.println(liste.toString() + " " + liste.omvendtString());
+        // System.out.println(liste.toString() + " " + liste.omvendtString());
 
        /* for (int i = 1; i <= 4; i++) {
             liste.leggInn(i);
@@ -22,12 +25,10 @@ public class MainProgram {
         }*/
 
         //System.out.println(liste.hent(3));
-       // System.out.println(liste.antall());
+        // System.out.println(liste.antall());
 
 
-
-
-       // System.out.println(liste.subliste(0,4));
+        // System.out.println(liste.subliste(0,4));
 
         //System.out.println(liste.oppdater(4,5));
         /*if (liste.oppdater(3,5) != 4){
@@ -39,7 +40,7 @@ public class MainProgram {
 
         //System.out.println(liste.indeksTil(5));
 
-       // System.out.println(liste.inneholder(3));
+        // System.out.println(liste.inneholder(3));
 
         //System.out.println(liste.antall());
 
@@ -70,7 +71,7 @@ public class MainProgram {
         System.out.println(liste.omvendtString());
 
 
-        String [] a = {"A","B","C","D","E","F","G"};
+        String[] a = {"A", "B", "C", "D", "E", "F", "G"};
 
         DobbeltLenketListe<String> liste1 = new DobbeltLenketListe<>(a);
 
@@ -104,11 +105,20 @@ public class MainProgram {
         System.out.println(liste2 + " " + liste2.omvendtString());
 
         DobbeltLenketListe<String> liste3 = new DobbeltLenketListe<>(new String[]
-                {"Birger","Lars","Anders","Bodil","Kari","Per","Berit"});
+                {"Birger", "Lars", "Anders", "Bodil", "Kari", "Per", "Berit"});
 
         liste3.fjernHvis(navn -> navn.charAt(0) == 'B');
 
         System.out.println(liste3 + " " + liste3.omvendtString());
+
+        String[] navn = {"Lars", "Anders", "Bodil", "Kari", "Per", "Berit"};
+
+        Liste<String> liste4 = new DobbeltLenketListe<>(navn);
+
+        DobbeltLenketListe.sorter(liste4, Comparator.naturalOrder());
+
+        System.out.println(Arrays.toString(navn));
+
 
 
 
@@ -121,9 +131,6 @@ public class MainProgram {
         System.out.println(liste1.subliste(3,8));
         System.out.println(liste1.subliste(5,5));
         System.out.println(liste1.subliste(8,liste1.antall()));*/
-
-
-
 
 
     }
